@@ -17,7 +17,7 @@ public class Finance_Dao {
 		 ps.setString(1, finance.getUsername());
 		 ps.setString(2,finance.getType());
 		 ps.setString(3, finance.getNumber());
-		 ps.setDate(4, null);
+		 ps.setDate(4, finance.getTime());
 		 ps.setString(5, finance.getComments());
 		 ps.executeUpdate();
 	 }finally {DB_conn_Fin.free(null,ps, conn);}//插入数据后释放连接
@@ -98,7 +98,7 @@ public class Finance_Dao {
 		   fin.setUsername(rs.getString(1));
 		   fin.setType(rs.getString(2));
 		   fin.setNumber(rs.getString(3));
-		   fin.setTime(rs.getTime(4));
+		   fin.setTime(rs.getDate(4));
 		   fin.setComments(rs.getString(5));
 		   finList.add(fin);
 		}

@@ -1,10 +1,12 @@
 package finan_bean;
-import java.util.Date;
+
+import java.sql.Date;
+
 public class Finance {
 	String username;
 	String type;
 	String number;
-	Date time;
+	java.sql.Date time = new java.sql.Date((new java.util.Date()).getTime());
 	String comments;
 	public String getUsername() {
 		return username;
@@ -25,11 +27,9 @@ public class Finance {
 		this.number = number;
 	}
 	public Date getTime() {
-//		java.sql.Date timePara = new java.sql.Date(time.getTime());
-		
-		return null;
+		return time;
 	}
-	public void setTime(Date time) {
+	public void setTime(java.sql.Date time) {
 		this.time = time;
 	}
 	public String getComments() {

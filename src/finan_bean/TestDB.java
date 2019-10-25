@@ -11,12 +11,21 @@ public class TestDB {
 			// TODO Auto-generated method stub
 			Finance f = new Finance();
 			f.setUsername("1398");
-			f.setType("t");
-			f.setNumber("123");
-			f.setTime(new Date());
-			f.setComments("123");
+			f.setType("In");
+			f.setNumber("1000");
+			f.setTime(new java.sql.Date((new java.util.Date()).getTime()));
+			f.setComments("¹¤×Ê");
+			
+			
 			Finance_Dao Fd = new Finance_Dao();
-			Fd.add(f);
+			int num = 2000;
+			for(int i=0;i<20;i++)
+			{
+				num += 67;
+				String number = String.valueOf(num);
+				f.setNumber(number);
+				Fd.add(f);
+			}
 //			String pwd = ud.findUser("01");
 //			System.out.print("success" + pwd);
 			
