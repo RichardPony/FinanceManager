@@ -61,22 +61,50 @@
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">  
     <div class="modal-dialog">  
         <div class="modal-content">  
-            <div class="modal-header">  
+			<div class="modal-header">  
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>  
             </div>
             <div style="text-align:center;">
             	<h4 class="modal-title" id="myModalLabel">增加信息</h4> 
             </div>
             <div class="modal-body">  
-	                类型:<input type="text" name="stuno" id="type" />   
-	                备注:<input type="text" name="pass" id="comments"/>   
-	                数额:<input type="text" name="stuname" id="number"/>   
-	                时间:<input type='text' name="time" class="form-control" id='datetime' />  
+            <!-- 用于添加数据的输入框组 -->
+             <!-- 类型 -->
+		     <div class="input-group mb-3">
+		      <div class="input-group-prepend">
+		        <span class="input-group-text">类型</span>
+		      </div>     
+		      	 <select class="form-control" id="type">
+			        <option>支出</option>
+			        <option>收入</option>
+			     </select>
+             </div>
+		     <!-- 备注 -->
+		     <div class="input-group mb-3">
+		      <div class="input-group-prepend">
+		        <span class="input-group-text">备注</span>
+		      </div>
+		      <input type="text" class="form-control" placeholder="Comments" id="comments">
+		     </div>
+		     <!-- 数额 -->
+		     <div class="input-group mb-3">
+		      <div class="input-group-prepend">
+		        <span class="input-group-text">数额</span>
+		      </div>
+		      <input type="text" class="form-control" placeholder="Number" id="number">
+		     </div>
+		     <!-- 时间 -->
+		     <div class="input-group mb-3">
+		      <div class="input-group-prepend">
+		        <span class="input-group-text">时间</span>
+		      </div>
+		      <input type="text" class="form-control" placeholder="Time" id='datetime'>
+		     </div>
             </div>  
             <div class="modal-footer">  
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>  
-                <button type="button" class="btn btn-primary" onclick="update()">提交更改</button>  
-            </div>  
+                <button type="button" class="btn btn-primary" onclick="update()" data-dismiss="modal">提交更改</button>  
+            </div>   
         </div>  
         <!-- /.modal-content -->  
     </div>  
@@ -120,7 +148,9 @@
         var comments = document.getElementById("comments").value;
         var number = document.getElementById("number").value;
         var time = document.getElementById("datetime").value;
-		alert(type + comments + number + time);
+        var username = <%=request.getParameter("username")%>;
+		alert(type + comments + number + time + username);
+		window.location.href = "AddInfoController?type="+type+"&comments="+comments+"&number="+number+"&time="+time+"&username="+username;
     }
    
 </script>

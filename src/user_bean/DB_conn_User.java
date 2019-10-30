@@ -29,8 +29,4 @@ public class DB_conn_User {
 			             }
 			     }
 		    }
-	public static void main(String args[])
-	{
-		System.out.print("ddd");
-	}
 }

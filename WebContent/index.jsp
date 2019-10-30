@@ -14,7 +14,7 @@
 </head>
 <body>
 	<div class="container" style="width:70%">
-	  <h2 align="center" style="margin-top:0px;">财务管理系统</h2>
+	  <h2 align="center" style="margin-top:40px;">财务管理系统</h2>
 	  <form method="post" action = "Login/login.jsp">
 	    <div class="form-group"  style="">
 	      <label for="email">用户名:</label>
