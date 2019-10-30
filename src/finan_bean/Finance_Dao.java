@@ -108,6 +108,32 @@ public class Finance_Dao {
 	}
 	return finList;
    }
+   
+   public List<Finance> QueryAll(String username) throws Exception{
+	Connection conn = null;
+	PreparedStatement ps = null;
+	ResultSet rs = null;
+	List<Finance> finList=new ArrayList<Finance>();
+	try {
+		conn = DB_conn_Fin.getConnection();
+		String sql = "select * from fin_info where username="+username;
+		ps=conn.prepareStatement(sql);
+		rs=ps.executeQuery();
+		while(rs.next()){
+		   Finance fin=new Finance();
+		   fin.setUsername(rs.getString(1));
+		   fin.setType(rs.getString(2));
+		   fin.setNumber(rs.getString(3));
+		   fin.setTime(rs.getDate(4));
+		   fin.setComments(rs.getString(5));
+		   finList.add(fin);
+		}
+	}finally {
+		DB_conn_Fin.free(rs, ps, conn);
+
+	}
+	return finList;
+   }
 }
 
 

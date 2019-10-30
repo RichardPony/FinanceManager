@@ -10,7 +10,7 @@ public class TestDB {
 		
 			// TODO Auto-generated method stub
 			Finance f = new Finance();
-			f.setUsername("1398");
+			f.setUsername("2017011398");
 			f.setType("In");
 			f.setNumber("1000");
 			f.setTime(new java.sql.Date((new java.util.Date()).getTime()));
@@ -19,7 +19,7 @@ public class TestDB {
 			
 			Finance_Dao Fd = new Finance_Dao();
 			int num = 2000;
-			for(int i=0;i<20;i++)
+			for(int i=0;i<5;i++)
 			{
 				num += 67;
 				String number = String.valueOf(num);

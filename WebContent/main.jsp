@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=GB18030" import="finan_bean.*" import="java.util.*"
-    pageEncoding="GB18030"%>
+    pageEncoding="GB2312"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="GB18030">
+<meta content="text/html;charset=GB2312">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
@@ -20,7 +20,8 @@
 <%
 	Finance_Dao fin = new Finance_Dao();
 	List<Finance> finList=new ArrayList<Finance>();
-	finList = fin.QueryAll();
+	String username = request.getParameter("username");
+	finList = fin.QueryAll(username);
 	
 %>
 <nav class="navbar navbar-expand-md bg-primary navbar-dark fixed-top" style="margin-top:0px;">
@@ -75,8 +76,8 @@
 		        <span class="input-group-text">类型</span>
 		      </div>     
 		      	 <select class="form-control" id="type">
-			        <option>支出</option>
-			        <option>收入</option>
+			        <option>OUT</option>
+			        <option>IN</option>
 			     </select>
              </div>
 		     <!-- 备注 -->
@@ -152,6 +153,11 @@
 		alert(type + comments + number + time + username);
 		window.location.href = "AddInfoController?type="+type+"&comments="+comments+"&number="+number+"&time="+time+"&username="+username;
     }
-   
+    var res ='<%=request.getParameter("res")%>';
+    if(res=='success'){
+     alert("数据插入成功");
+     window.location.href="main.jsp?username="+ <%=request.getParameter("username")%>;
+    }
+    
 </script>
 </html>

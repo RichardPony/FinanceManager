@@ -1,6 +1,7 @@
 package control;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -23,11 +24,14 @@ public class AddInfoController extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("GB2312");
 		String type = request.getParameter("type");
 		String comments = request.getParameter("comments");
 		String number = request.getParameter("number");
 		String time = request.getParameter("time");
 		String username = request.getParameter("username");
+		//½âÂë
+		System.out.print(type);
 		
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		try {
@@ -45,8 +49,8 @@ public class AddInfoController extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.print(comments);
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.sendRedirect("main.jsp?username="+username+"&res=success");
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
