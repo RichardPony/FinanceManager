@@ -1,11 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=GB2312"
-    pageEncoding="GB2312"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="GB18030">
-	<title>财务管理系统</title>
 	<meta charset="utf-8">
+	<title>璐㈠姟绠＄悊绯荤粺</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
 	<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
@@ -14,20 +13,26 @@
 </head>
 <body>
 	<div class="container" style="width:70%">
-	  <h2 align="center" style="margin-top:40px;">财务管理系统</h2>
+	  <h2 align="center" style="margin-top:40px;">璐㈠姟绠＄悊绯荤粺</h2>
 	  <form method="post" action = "Login/login.jsp">
 	    <div class="form-group"  style="">
-	      <label for="email">用户名:</label>
-	      <input type="text" name="username" class="form-control" id="email" placeholder="Enter username">
+	      <label for="email">鐢ㄦ埛鍚�:</label>
+	      <input type="text" name="username" class="form-control" id="username" placeholder="Enter username">
 	    </div>
 	    <div class="form-group"  style="">
-	      <label for="pwd">密码:</label>
+	      <label for="pwd">瀵嗙爜:</label>
 	      <input type="password" name="password" class="form-control" id="pwd" placeholder="Enter password">
 	    </div>
-	    <button type="submit" class="btn btn-primary" style="width:40%;float:left">登录</button>
-  		<a href="register.jsp"><button type="button" class="btn btn-secondary" style="width:40%;float:right">注册</button></a>
+	    <button type="submit" class="btn btn-primary" style="width:40%;float:left">鐧诲綍</button>
+  		<a href="javascript:void(0);" onclick="register()"><button type="button" class="btn btn-secondary" style="width:40%;float:right">娉ㄥ唽</button></a>
 	  </form>
 	</div>
-
+<script>
+function register() {
+	var username = document.getElementById("username").value;
+	var password = document.getElementById("pwd").value;
+	window.location.href='Register?username='+ username +"&password="+password;
+	}
+</script>
 </body>
 </html>

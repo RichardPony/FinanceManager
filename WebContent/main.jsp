@@ -112,16 +112,16 @@
     <!-- /.modal -->  
 </div>  
 <!-- 模态框（Modal）end -->
-
-<div style="text-align:center;">
-用户共有
-    <font size="5" color="red"> <%=finList.size()%></font>条财务数据
-</div>
+<div>
+	<div style="text-align:center;">
+	用户共有
+	    <font size="5" color="red"> <%=finList.size()%></font>条财务数据
+	</div>
     <table class="table table-hover">
          <tr bgcolor="CCCCCC" align="center">
              <td>用户名</td> <td>类型</td><td>备注</td><td>数额</td> <td>时间</td>
          </tr>
-         <%System.out.print(finList.get(3).getTime()); %>
+         
     <%int len=finList.size();
     for(int i=0;i<finList.size();i++){
         %>   <tr align="center">
@@ -133,7 +133,8 @@
                 <%len--; %>
               </tr>            
            <% }%>
-         </table>
+    </table>
+</div>
 </body>
 <script>
     $(function () {

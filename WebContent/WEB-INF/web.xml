@@ -10,7 +10,7 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   
-   <servlet>
+  <servlet>
 	<servlet-name>AddInfoController</servlet-name>
 	<servlet-class>control.AddInfoController</servlet-class>
   </servlet>
@@ -18,4 +18,5 @@
 	<servlet-name>AddInfoController</servlet-name>
 	<url-pattern>/AddInfoController</url-pattern>
   </servlet-mapping>
+  
 </web-app>

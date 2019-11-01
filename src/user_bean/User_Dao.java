@@ -65,7 +65,7 @@ public class User_Dao {
 	return Pwd;
    }
    //判断User表中是否存在某用户
-   boolean JudgeExist(String username) throws Exception {
+   public boolean JudgeExist(String username) throws Exception {
 	   Connection conn = DB_conn_User.getConnection();
 	   String sql = "select count(*) as ct from user where username=?";
 	   PreparedStatement ps = conn.prepareStatement(sql);
