@@ -21,6 +21,7 @@
 	Finance_Dao fin = new Finance_Dao();
 	List<Finance> finList=new ArrayList<Finance>();
 	String username = request.getParameter("username");
+	String detail = request.getParameter("detail");
 	finList = fin.QueryAll(username);
 	
 %>
@@ -104,7 +105,7 @@
             </div>  
             <div class="modal-footer">  
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>  
-                <button type="button" class="btn btn-primary" onclick="update()" data-dismiss="modal">提交更改</button>  
+                <button type="button" class="btn btn-primary" onclick="add()" data-dismiss="modal">提交更改</button>  
             </div>   
         </div>  
         <!-- /.modal-content -->  
@@ -112,14 +113,14 @@
     <!-- /.modal -->  
 </div>  
 <!-- 模态框（Modal）end -->
-<div>
+<div id="table">
 	<div style="text-align:center;">
 	用户共有
 	    <font size="5" color="red"> <%=finList.size()%></font>条财务数据
 	</div>
     <table class="table table-hover">
          <tr bgcolor="CCCCCC" align="center">
-             <td>用户名</td> <td>类型</td><td>备注</td><td>数额</td> <td>时间</td>
+             <td>用户名</td> <td>类型</td><td>备注</td><td>数额</td> <td>时间</td><td>操作</td>
          </tr>
          
     <%int len=finList.size();
@@ -128,10 +129,16 @@
                 <td><%= finList.get(i).getUsername() %></td>
                 <td><%= finList.get(i).getType() %></td>
                 <td><%= finList.get(i).getComments() %></td>
-                <td><%= finList.get(i).getNumber() %></td>
+               
+               
+               	 <td><%= finList.get(i).getNumber() %></td>
                 <td><%= finList.get(i).getTime() %></td>
+                <td>
+	                <button type="button" class="btn btn-outline-info" onclick="del('<%= finList.get(i).getId() %>')">修改</button>
+	                <button type="button" class="btn btn-outline-danger" onclick="del('<%= finList.get(i).getId() %>')">删除</button>
+               	</td>
                 <%len--; %>
-              </tr>            
+             </tr>            
            <% }%>
     </table>
 </div>
@@ -143,8 +150,12 @@
              locale: moment.locale('zh-cn')
         });
     }); 
-    //提交更改  
-    function update() {  
+    function del(data){
+    	window.location.href="DeleteController?username=" + <%=request.getParameter("username")%> + "&id="+data;
+    }
+    
+    //处理添加操作  
+    function add() {  
         //获取模态框数据  
         var type = document.getElementById("type").value;
         var comments = document.getElementById("comments").value;
@@ -156,7 +167,7 @@
     }
     var res ='<%=request.getParameter("res")%>';
     if(res=='success'){
-     alert("数据插入成功");
+     alert("操作成功");
      window.location.href="main.jsp?username="+ <%=request.getParameter("username")%>;
     }
     

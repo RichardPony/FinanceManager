@@ -2,8 +2,6 @@ package finan_bean;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import finan_bean.*;
 public class Finance_Dao {
 
    //向数据库中添加用户记录的方法add()
@@ -12,7 +10,7 @@ public class Finance_Dao {
 	 PreparedStatement ps = null;
 	 try {
 		 conn = DB_conn_Fin.getConnection();
-		 String sql = "insert into fin_info values (?,?,?,?,?)";
+		 String sql = "insert into fin_info(username,type,number,time,comments) values (?,?,?,?,?)";
 		 ps = conn.prepareStatement(sql);
 		 ps.setString(1, finance.getUsername());
 		 ps.setString(2,finance.getType());
@@ -36,18 +34,18 @@ public class Finance_Dao {
 //		ps.executeUpdate();
 //	}finally {DB_conn.free(null,ps, conn);}
 //   }
-// //删除数据库用户记录的方法delete()
-//   public void delete(String username) throws Exception{
-//	 Connection conn = null;
-//	 PreparedStatement ps = null;
-//	 try {
-//		conn = DB_conn.getConnection();
-//		String sql = "delete from user where username=?";
-//		ps = conn.prepareStatement(sql);
-//		ps.setString(1,username);
-//		ps.executeUpdate();
-//	}finally {DB_conn.free( null,ps, conn);}
-//   }
+ //删除数据库用户记录的方法delete()
+   public void delete(int id) throws Exception{
+	 Connection conn = null;
+	 PreparedStatement ps = null;
+	 try {
+		conn = DB_conn_Fin.getConnection();
+		String sql = "delete from fin_info where id=?";
+		ps = conn.prepareStatement(sql);
+		ps.setInt(1,id);
+		ps.execute();
+	}finally {DB_conn_Fin.free( null,ps, conn);}
+   }
 //   //根据用户名查询用户密码的方法findUser()
 //   public String findUser(String username) throws Exception{
 //	if(!JudgeExist(username)) {return "false";}
@@ -95,11 +93,12 @@ public class Finance_Dao {
 		rs=ps.executeQuery();
 		while(rs.next()){
 		   Finance fin=new Finance();
-		   fin.setUsername(rs.getString(1));
-		   fin.setType(rs.getString(2));
-		   fin.setNumber(rs.getString(3));
-		   fin.setTime(rs.getDate(4));
-		   fin.setComments(rs.getString(5));
+		   fin.setId(rs.getInt(1));
+		   fin.setUsername(rs.getString(2));
+		   fin.setType(rs.getString(3));
+		   fin.setNumber(rs.getString(4));
+		   fin.setTime(rs.getDate(5));
+		   fin.setComments(rs.getString(6));
 		   finList.add(fin);
 		}
 	}finally {
@@ -121,11 +120,12 @@ public class Finance_Dao {
 		rs=ps.executeQuery();
 		while(rs.next()){
 		   Finance fin=new Finance();
-		   fin.setUsername(rs.getString(1));
-		   fin.setType(rs.getString(2));
-		   fin.setNumber(rs.getString(3));
-		   fin.setTime(rs.getDate(4));
-		   fin.setComments(rs.getString(5));
+		   fin.setId(rs.getInt(1));
+		   fin.setUsername(rs.getString(2));
+		   fin.setType(rs.getString(3));
+		   fin.setNumber(rs.getString(4));
+		   fin.setTime(rs.getDate(5));
+		   fin.setComments(rs.getString(6));
 		   finList.add(fin);
 		}
 	}finally {
@@ -134,6 +134,32 @@ public class Finance_Dao {
 	}
 	return finList;
    }
+   public List<Finance> Query(String username,String TimeStart,String TimeEnd) throws Exception, SQLException{
+	   Connection conn = null;
+	   PreparedStatement ps = null;
+	   ResultSet rs = null;
+	   List<Finance> FinList = new ArrayList<Finance>();
+	   try {
+		   conn = DB_conn_Fin.getConnection();
+			String sql = "select * from fin_info where time between "+"'"+TimeStart+"'"+" and "+"'"+TimeEnd+"'";
+			
+			ps=conn.prepareStatement(sql);
+			rs=ps.executeQuery();
+			while(rs.next()){
+			   Finance fin=new Finance();
+			   System.out.print(rs.getString(1));
+			   fin.setUsername(rs.getString(1));
+			   fin.setType(rs.getString(2));
+			   fin.setNumber(rs.getString(3));
+			   fin.setTime(rs.getDate(4));
+			   fin.setComments(rs.getString(5));
+			   FinList.add(fin);
+			}
+		   
+	   }finally {
+		   
+	   }
+	   return FinList;
+   }
+   
 }
-
-
