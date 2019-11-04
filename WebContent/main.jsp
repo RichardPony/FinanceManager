@@ -18,29 +18,42 @@
 </head>
 <body>
 <%
+	String TimeStart = request.getParameter("TimeStart");
+	String TimeEnd = request.getParameter("TimeEnd");
 	Finance_Dao fin = new Finance_Dao();
 	List<Finance> finList=new ArrayList<Finance>();
 	String username = request.getParameter("username");
 	String detail = request.getParameter("detail");
-	finList = fin.QueryAll(username);
+	String index = "main.jsp?username=" + username;
+	List<String> Sum = new ArrayList<String>();
+	String Sum_in,Sum_out;
 	
+	if(TimeStart!=null&&TimeEnd!=null){
+		finList = fin.Query(username, TimeStart, TimeEnd);
+		Sum = fin.QuerySum(username, TimeStart, TimeEnd);
+		Sum_in = Sum.get(0);
+		Sum_out = Sum.get(1);
+	}
+	else{
+		finList = fin.QueryAll(username);
+		Sum = fin.QuerySum(username, null, null);
+		Sum_in = Sum.get(0);
+		Sum_out = Sum.get(1);
+	}
 %>
-<nav class="navbar navbar-expand-md bg-primary navbar-dark fixed-top" style="margin-top:0px;">
+<nav class="navbar navbar-expand-md bg-primary navbar-dark" style="margin-top:0px;">
   <ul class="navbar-nav">
     <li class="nav-item active">
-      <a class="nav-link" href="#">Finance Manager</a>
+      <a class="nav-link" href=<%=index %>>Finance Manager</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">首页</a>
+      <a class="nav-link" href=<%=index %>>首页</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">添加财务信息</a>
+      <a class="nav-link" href="#" data-toggle="modal" data-target="#myModal" onclick="editInfo(obj)">添加财务信息</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="#">统计财务信息</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Disabled</a>
     </li>
     <li class="nav-item float-right">	
       <a class="nav-link" href="#">注册</a>
@@ -55,11 +68,32 @@
   </div>
 </div>
 
-<div style="text-align:center; margin-top:30px">
-	<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" onclick="editInfo(obj)">
-		新增财务信息
-	</button>
+<div style="text-align:center; margin:-20px 0 10px 0">
+	<table class="table table-hover">
+		<tr>
+			<td></td>
+			<td>支出总额:<%=Sum_out %></td>
+			<td>收入总额:<%=Sum_in %></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td><input type="text" class="form-control" placeholder="起始时间" id='TimeStart' style="width:70%;float:left;"></td>
+			<td><input type="text" class="form-control" placeholder="结束时间" id='TimeEnd'style="width:70%;float:left;"></td>
+			<td>
+				<button class="btn btn-primary btn-lg" onclick="Query()">
+					查询财务信息
+				</button>
+			</td>
+			<td>
+				<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" onclick="editInfo(obj)">
+					新增财务信息
+				</button>
+			</td>
+		</tr>
+		
+	</table>
 </div>
+
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">  
     <div class="modal-dialog">  
         <div class="modal-content">  
@@ -150,6 +184,18 @@
              locale: moment.locale('zh-cn')
         });
     }); 
+    $(function () {
+        $("#TimeStart").datetimepicker({
+             format: 'YYYY-MM-DD',
+             locale: moment.locale('zh-cn')
+        });
+    }); 
+    $(function () {
+        $("#TimeEnd").datetimepicker({
+             format: 'YYYY-MM-DD',
+             locale: moment.locale('zh-cn')
+        });
+    }); 
     function del(data){
     	window.location.href="DeleteController?username=" + <%=request.getParameter("username")%> + "&id="+data;
     }
@@ -170,6 +216,10 @@
      alert("操作成功");
      window.location.href="main.jsp?username="+ <%=request.getParameter("username")%>;
     }
-    
+    function Query(){
+    	var TimeStart = document.getElementById("TimeStart").value;
+    	var TimeEnd = document.getElementById("TimeEnd").value;
+    	window.location.href = "main.jsp?username="+<%=request.getParameter("username")%>+"&TimeStart="+TimeStart+"&TimeEnd="+TimeEnd;
+    }
 </script>
 </html>

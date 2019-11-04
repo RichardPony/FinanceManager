@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 public class Finance_Dao {
 
-   //ÏòÊı¾İ¿âÖĞÌí¼ÓÓÃ»§¼ÇÂ¼µÄ·½·¨add()
+   //ï¿½ï¿½ï¿½ï¿½ï¿½İ¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Â¼ï¿½Ä·ï¿½ï¿½ï¿½add()
    public void add(Finance finance) throws Exception{
 	 Connection conn = null;
 	 PreparedStatement ps = null;
@@ -18,10 +18,10 @@ public class Finance_Dao {
 		 ps.setDate(4, finance.getTime());
 		 ps.setString(5, finance.getComments());
 		 ps.executeUpdate();
-	 }finally {DB_conn_Fin.free(null,ps, conn);}//²åÈëÊı¾İºóÊÍ·ÅÁ¬½Ó
+	 }finally {DB_conn_Fin.free(null,ps, conn);}//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İºï¿½ï¿½Í·ï¿½ï¿½ï¿½ï¿½ï¿½
    }
 
-// //ĞŞ¸ÄÊı¾İ¿âÓÃ»§¼ÇÂ¼µÄ·½·¨update()
+// //ï¿½Ş¸ï¿½ï¿½ï¿½ï¿½İ¿ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Â¼ï¿½Ä·ï¿½ï¿½ï¿½update()
 //   public void update(User user) throws Exception{
 //	Connection conn = null;
 //	PreparedStatement ps = null;
@@ -34,7 +34,7 @@ public class Finance_Dao {
 //		ps.executeUpdate();
 //	}finally {DB_conn.free(null,ps, conn);}
 //   }
- //É¾³ıÊı¾İ¿âÓÃ»§¼ÇÂ¼µÄ·½·¨delete()
+ //É¾ï¿½ï¿½ï¿½ï¿½ï¿½İ¿ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Â¼ï¿½Ä·ï¿½ï¿½ï¿½delete()
    public void delete(int id) throws Exception{
 	 Connection conn = null;
 	 PreparedStatement ps = null;
@@ -46,7 +46,7 @@ public class Finance_Dao {
 		ps.execute();
 	}finally {DB_conn_Fin.free( null,ps, conn);}
    }
-//   //¸ù¾İÓÃ»§Ãû²éÑ¯ÓÃ»§ÃÜÂëµÄ·½·¨findUser()
+//   //ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½findUser()
 //   public String findUser(String username) throws Exception{
 //	if(!JudgeExist(username)) {return "false";}
 //	Connection conn = null;
@@ -65,7 +65,7 @@ public class Finance_Dao {
 //	}finally {DB_conn.free(rs, ps, conn);}
 //	return Pwd;
 //   }
-//   //ÅĞ¶ÏUser±íÖĞÊÇ·ñ´æÔÚÄ³ÓÃ»§
+//   //ï¿½Ğ¶ï¿½Userï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½Ä³ï¿½Ã»ï¿½
 //   boolean JudgeExist(String username) throws Exception {
 //	   Connection conn = DB_conn.getConnection();
 //	   String sql = "select count(*) as ct from user where username=?";
@@ -80,7 +80,7 @@ public class Finance_Dao {
 //	   }
 //	   return false;
 //   }
-   //²éÑ¯È«²¿ÓÃ»§µÄ·½·¨QueryAll()
+   //ï¿½ï¿½Ñ¯È«ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Ä·ï¿½ï¿½ï¿½QueryAll()
    public List<Finance> QueryAll() throws Exception{
 	Connection conn = null;
 	PreparedStatement ps = null;
@@ -141,25 +141,104 @@ public class Finance_Dao {
 	   List<Finance> FinList = new ArrayList<Finance>();
 	   try {
 		   conn = DB_conn_Fin.getConnection();
-			String sql = "select * from fin_info where time between "+"'"+TimeStart+"'"+" and "+"'"+TimeEnd+"'";
+			String sql = "select * from fin_info where username=" +username+ " and time between "+"'"+TimeStart+"'"+" and "+"'"+TimeEnd+"'";
 			
 			ps=conn.prepareStatement(sql);
 			rs=ps.executeQuery();
 			while(rs.next()){
 			   Finance fin=new Finance();
-			   System.out.print(rs.getString(1));
-			   fin.setUsername(rs.getString(1));
-			   fin.setType(rs.getString(2));
-			   fin.setNumber(rs.getString(3));
-			   fin.setTime(rs.getDate(4));
-			   fin.setComments(rs.getString(5));
+//			   System.out.print(rs.getString(1));
+			   fin.setUsername(rs.getString(2));
+			   fin.setType(rs.getString(3));
+			   fin.setNumber(rs.getString(4));
+			   fin.setTime(rs.getDate(5));
+			   fin.setComments(rs.getString(6));
 			   FinList.add(fin);
 			}
 		   
 	   }finally {
-		   
+		   DB_conn_Fin.free(rs, ps, conn);
 	   }
 	   return FinList;
+   }
+   public List<String> QuerySum(String username,String TimeStart,String TimeEnd) throws Exception, Exception{
+	   Connection conn = null;
+	   PreparedStatement ps = null;
+	   ResultSet rs = null;
+	   List<String> res = new ArrayList<String>();
+	   //å¦‚æœæ²¡æœ‰æ—¶é—´ï¼Œå°±æ˜¯å…¨éƒ¨
+	   if(TimeStart==null&&TimeEnd==null)
+	   {
+		   try {
+			   conn = DB_conn_Fin.getConnection();
+				String sql = "select number from fin_info where username=" +username +" and type = "+ "'IN'";
+				Double SUM_IN = new Double(0);
+				ps=conn.prepareStatement(sql);
+				rs=ps.executeQuery();
+				while(rs.next()){
+					SUM_IN += Double.valueOf(rs.getString(1));
+				}
+				String IN = String.valueOf(SUM_IN);
+				res.add(IN);
+			   
+		   }finally {
+			   DB_conn_Fin.free(rs, ps, conn);
+		   }
+		   //å†æŸ¥è¯¢æ”¯å‡ºæ€»é¢
+		   try {
+			   conn = DB_conn_Fin.getConnection();
+				String sql = "select number from fin_info where username=" +username +" and type = "+ "'OUT'";
+				Double SUM_OUT = new Double(0);
+				ps=conn.prepareStatement(sql);
+				rs=ps.executeQuery();
+				while(rs.next()){
+					SUM_OUT += Double.valueOf(rs.getString(1));
+				}
+				String OUT = String.valueOf(SUM_OUT);
+				res.add(OUT);
+			   
+		   }finally {
+			   DB_conn_Fin.free(rs, ps, conn);
+		   }
+		   System.out.print(res);
+	   }
+	   //å¦‚æœæœ‰æ—¶é—´ï¼Œå°±æŒ‰æ—¶é—´æŸ¥è¯¢
+	   else {
+		 //å…ˆæŸ¥è¯¢æ”¶å…¥æ€»å’Œ
+		   try {
+			   conn = DB_conn_Fin.getConnection();
+				String sql = "select number from fin_info where username=" +username +" and type = "+ "'IN'" +" and time between "+"'"+TimeStart+"'"+" and "+"'"+TimeEnd+"'";
+				Double SUM_IN = new Double(0);
+				ps=conn.prepareStatement(sql);
+				rs=ps.executeQuery();
+				while(rs.next()){
+					SUM_IN += Double.valueOf(rs.getString(1));
+				}
+				String IN = String.valueOf(SUM_IN);
+				res.add(IN);
+			   
+		   }finally {
+			   DB_conn_Fin.free(rs, ps, conn);
+		   }
+		   //å†æŸ¥è¯¢æ”¯å‡ºæ€»é¢
+		   try {
+			   conn = DB_conn_Fin.getConnection();
+				String sql = "select number from fin_info where username=" +username +" and type = "+ "'OUT'" +" and time between "+"'"+TimeStart+"'"+" and "+"'"+TimeEnd+"'";
+				Double SUM_OUT = new Double(0);
+				ps=conn.prepareStatement(sql);
+				rs=ps.executeQuery();
+				while(rs.next()){
+					SUM_OUT += Double.valueOf(rs.getString(1));
+				}
+				String OUT = String.valueOf(SUM_OUT);
+				res.add(OUT);
+			   
+		   }finally {
+			   DB_conn_Fin.free(rs, ps, conn);
+		   }
+	   }
+	   
+	   return res;
    }
    
 }

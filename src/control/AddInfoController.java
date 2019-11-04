@@ -30,7 +30,7 @@ public class AddInfoController extends HttpServlet {
 		String number = request.getParameter("number");
 		String time = request.getParameter("time");
 		String username = request.getParameter("username");
-		//½âÂë
+	
 		System.out.print(type);
 		
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");

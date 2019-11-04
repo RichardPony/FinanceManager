@@ -21,24 +21,23 @@ public class Register extends HttpServlet {
 		String username=request.getParameter("username");
 		String password=request.getParameter("password");
 		System.out.println(username); 
-		//设置 JavaBean 属性 
+		
 		User user=new User();
 		user.setUsername(username);
 		user.setPassword(password);
-		//调用相应业务方法，根据返回值选择合适的视图层响应用户 
-		//注册，用户不存在则注册，存在报错
+
 		User_Dao dao = new User_Dao();
 		try {
 			boolean exist = dao.JudgeExist(username);
 	        PrintWriter out = response.getWriter();
-	        String failed = URLEncoder.encode("用户已经存在！", "UTF-8");
+	        String failed = URLEncoder.encode("鐢ㄦ埛宸茬粡瀛樺湪", "UTF-8");
 			if(exist) {
 				out.print("<script language='javascript'>alert(decodeURIComponent('"+failed+"'));window.location.href='index.jsp';</script>");
 			}
 			else {
-				//插入数据库
+				
 				dao.add(user);
-				String success = URLEncoder.encode("注册成功", "UTF-8");
+				String success = URLEncoder.encode("娉ㄥ唽鎴愬姛", "UTF-8");
 				out.print("<script>alert(decodeURIComponent('"+success+"'));window.location.href='index.jsp';</script>");
 			}
 		} catch (Exception e) {

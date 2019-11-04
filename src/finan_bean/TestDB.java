@@ -16,17 +16,13 @@ public class TestDB {
 //			f.setType("In");
 //			f.setNumber("1000");
 //			f.setTime(new java.sql.Date((new java.util.Date()).getTime()));
-//			f.setComments("工资");
+//			f.setComments("锟斤拷锟斤拷");
 			
 			
 			Finance_Dao Fd = new Finance_Dao();
-			Finance f = new Finance();
-			f.setUsername("2017011398");
-			f.setType("In");
-			f.setNumber("1000");
-			f.setTime(new java.sql.Date((new java.util.Date()).getTime()));
-			f.setComments("工资");
-			Fd.add(f);
+			String username = "1398";
+			
+			System.out.print(Fd.QuerySum(username, null,null ));
 //			List<Finance> finList=new ArrayList<Finance>();
 //			finList = Fd.Query("1398", "2019-10-1", "2019-11-1");
 //			System.out.print(finList.size());

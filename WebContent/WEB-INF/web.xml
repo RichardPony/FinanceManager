@@ -9,14 +9,12 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  
   <servlet>
-	<servlet-name>AddInfoController</servlet-name>
-	<servlet-class>control.AddInfoController</servlet-class>
+    <servlet-name>AddInfoController</servlet-name>
+    <servlet-class>control.AddInfoController</servlet-class>
   </servlet>
   <servlet-mapping>
-	<servlet-name>AddInfoController</servlet-name>
-	<url-pattern>/AddInfoController</url-pattern>
+    <servlet-name>AddInfoController</servlet-name>
+    <url-pattern>/AddInfoController</url-pattern>
   </servlet-mapping>
-  
 </web-app>
