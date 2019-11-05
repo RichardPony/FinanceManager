@@ -31,7 +31,7 @@ public class AddInfoController extends HttpServlet {
 		String time = request.getParameter("time");
 		String username = request.getParameter("username");
 	
-		System.out.print(type);
+		System.out.print("\n"+comments);
 		
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		try {
@@ -43,6 +43,7 @@ public class AddInfoController extends HttpServlet {
 			fin.setNumber(number);
 			fin.setTime(Time);
 			fin.setUsername(username);
+	
 			
 			Finance_Dao FD = new Finance_Dao();
 			FD.add(fin);

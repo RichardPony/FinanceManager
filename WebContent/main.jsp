@@ -39,6 +39,7 @@
 		Sum = fin.QuerySum(username, null, null);
 		Sum_in = Sum.get(0);
 		Sum_out = Sum.get(1);
+		System.out.print(Sum);
 	}
 %>
 <nav class="navbar navbar-expand-md bg-primary navbar-dark" style="margin-top:0px;">
@@ -56,7 +57,7 @@
       <a class="nav-link" href="#">统计财务信息</a>
     </li>
     <li class="nav-item float-right">	
-      <a class="nav-link" href="#">注册</a>
+      <a class="nav-link" href="index.jsp">注册</a>
     </li>
   </ul>
 </nav>
@@ -71,7 +72,7 @@
 <div style="text-align:center; margin:-20px 0 10px 0">
 	<table class="table table-hover">
 		<tr>
-			<td></td>
+			<td>总额统计:</td>
 			<td>支出总额:<%=Sum_out %></td>
 			<td>收入总额:<%=Sum_in %></td>
 			<td></td>
@@ -85,7 +86,7 @@
 				</button>
 			</td>
 			<td>
-				<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" onclick="editInfo(obj)">
+				<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
 					新增财务信息
 				</button>
 			</td>
@@ -95,9 +96,10 @@
 </div>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">  
+    <!--用于插入的模态框-->
     <div class="modal-dialog">  
-        <div class="modal-content">  
-			<div class="modal-header">  
+        <div class="modal-content">
+			<div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>  
             </div>
             <div style="text-align:center;">
@@ -111,8 +113,8 @@
 		        <span class="input-group-text">类型</span>
 		      </div>     
 		      	 <select class="form-control" id="type">
-			        <option>OUT</option>
-			        <option>IN</option>
+			        <option>支出</option>
+			        <option>收入</option>
 			     </select>
              </div>
 		     <!-- 备注 -->
@@ -127,7 +129,7 @@
 		      <div class="input-group-prepend">
 		        <span class="input-group-text">数额</span>
 		      </div>
-		      <input type="text" class="form-control" placeholder="Number" id="number">
+		      <input type="text" class="form-control" placeholder="Number" id="number" oninput = "value=value.replace(/[^\d]/g,'')">
 		     </div>
 		     <!-- 时间 -->
 		     <div class="input-group mb-3">
@@ -147,6 +149,62 @@
     <!-- /.modal -->  
 </div>  
 <!-- 模态框（Modal）end -->
+
+<div class="modal fade" id="ChangeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">  
+    <!--用于修改的模态框-->
+    <div class="modal-dialog">  
+        <div class="modal-content">
+			<div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>  
+            </div>
+            <div style="text-align:center;">
+            	<h4 class="modal-title" id="myModalLabel">增加信息</h4> 
+            </div>
+            <div class="modal-body">  
+            <!-- 用于添加数据的输入框组 -->
+             <!-- 类型 -->
+		     <div class="input-group mb-3">
+		      <div class="input-group-prepend">
+		        <span class="input-group-text">类型</span>
+		      </div>     
+		      	 <select class="form-control" id="type">
+			        <option>支出</option>
+			        <option>收入</option>
+			     </select>
+             </div>
+		     <!-- 备注 -->
+		     <div class="input-group mb-3">
+		      <div class="input-group-prepend">
+		        <span class="input-group-text">备注</span>
+		      </div>
+		      <input type="text" class="form-control" placeholder="Comments" id="comments">
+		     </div>
+		     <!-- 数额 -->
+		     <div class="input-group mb-3">
+		      <div class="input-group-prepend">
+		        <span class="input-group-text">数额</span>
+		      </div>
+		      <input type="text" class="form-control" placeholder="Number" id="number" oninput = "value=value.replace(/[^\d]/g,'')">
+		     </div>
+		     <!-- 时间 -->
+		     <div class="input-group mb-3">
+		      <div class="input-group-prepend">
+		        <span class="input-group-text">时间</span>
+		      </div>
+		      <input type="text" class="form-control" placeholder="Time" id='changetime'>
+		     </div>
+            </div>  
+            <div class="modal-footer">  
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>  
+                <button type="button" class="btn btn-primary" onclick="change()" data-dismiss="modal">提交更改</button>  
+            </div>   
+        </div>  
+        <!-- /.modal-content -->  
+    </div>  
+    <!-- /.modal -->  
+</div>  
+<!-- 模态框（Modal）end -->
+
 <div id="table">
 	<div style="text-align:center;">
 	用户共有
@@ -168,7 +226,7 @@
                	 <td><%= finList.get(i).getNumber() %></td>
                 <td><%= finList.get(i).getTime() %></td>
                 <td>
-	                <button type="button" class="btn btn-outline-info" onclick="del('<%= finList.get(i).getId() %>')">修改</button>
+	                <button type="button" class="btn btn-outline-info" data-id=<%= finList.get(i).getId() %> data-toggle="modal" data-target="#ChangeModal">修改</button>
 	                <button type="button" class="btn btn-outline-danger" onclick="del('<%= finList.get(i).getId() %>')">删除</button>
                	</td>
                 <%len--; %>
@@ -180,6 +238,12 @@
 <script>
     $(function () {
         $("#datetime").datetimepicker({
+             format: 'YYYY-MM-DD',
+             locale: moment.locale('zh-cn')
+        });
+    }); 
+    $(function () {
+        $("#changetime").datetimepicker({
              format: 'YYYY-MM-DD',
              locale: moment.locale('zh-cn')
         });
@@ -208,9 +272,21 @@
         var number = document.getElementById("number").value;
         var time = document.getElementById("datetime").value;
         var username = <%=request.getParameter("username")%>;
-		alert(type + comments + number + time + username);
-		window.location.href = "AddInfoController?type="+type+"&comments="+comments+"&number="+number+"&time="+time+"&username="+username;
+        alert(time);
+		if(number==""){
+			alert("数额不能为空");
+			return;
+		}
+		else{
+			var url = encodeURI("AddInfoController?type="+type+"&comments="+comments+"&number="+number+"&time="+time+"&username="+username);
+			window.location.href = url;
+		}
+		
     }
+    function change(){
+    	alert("修改成功");
+    }
+    
     var res ='<%=request.getParameter("res")%>';
     if(res=='success'){
      alert("操作成功");

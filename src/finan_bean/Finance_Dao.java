@@ -147,7 +147,6 @@ public class Finance_Dao {
 			rs=ps.executeQuery();
 			while(rs.next()){
 			   Finance fin=new Finance();
-//			   System.out.print(rs.getString(1));
 			   fin.setUsername(rs.getString(2));
 			   fin.setType(rs.getString(3));
 			   fin.setNumber(rs.getString(4));
@@ -171,7 +170,7 @@ public class Finance_Dao {
 	   {
 		   try {
 			   conn = DB_conn_Fin.getConnection();
-				String sql = "select number from fin_info where username=" +username +" and type = "+ "'IN'";
+				String sql = "select number from fin_info where username=" +username +" and type = "+ "'收入'";
 				Double SUM_IN = new Double(0);
 				ps=conn.prepareStatement(sql);
 				rs=ps.executeQuery();
@@ -187,7 +186,7 @@ public class Finance_Dao {
 		   //再查询支出总额
 		   try {
 			   conn = DB_conn_Fin.getConnection();
-				String sql = "select number from fin_info where username=" +username +" and type = "+ "'OUT'";
+				String sql = "select number from fin_info where username=" +username +" and type = "+ "'支出'";
 				Double SUM_OUT = new Double(0);
 				ps=conn.prepareStatement(sql);
 				rs=ps.executeQuery();
@@ -200,14 +199,13 @@ public class Finance_Dao {
 		   }finally {
 			   DB_conn_Fin.free(rs, ps, conn);
 		   }
-		   System.out.print(res);
 	   }
 	   //如果有时间，就按时间查询
 	   else {
 		 //先查询收入总和
 		   try {
 			   conn = DB_conn_Fin.getConnection();
-				String sql = "select number from fin_info where username=" +username +" and type = "+ "'IN'" +" and time between "+"'"+TimeStart+"'"+" and "+"'"+TimeEnd+"'";
+				String sql = "select number from fin_info where username=" +username +" and type = "+ "'收入'" +" and time between "+"'"+TimeStart+"'"+" and "+"'"+TimeEnd+"'";
 				Double SUM_IN = new Double(0);
 				ps=conn.prepareStatement(sql);
 				rs=ps.executeQuery();
@@ -223,7 +221,7 @@ public class Finance_Dao {
 		   //再查询支出总额
 		   try {
 			   conn = DB_conn_Fin.getConnection();
-				String sql = "select number from fin_info where username=" +username +" and type = "+ "'OUT'" +" and time between "+"'"+TimeStart+"'"+" and "+"'"+TimeEnd+"'";
+				String sql = "select number from fin_info where username=" +username +" and type = "+ "'支出'" +" and time between "+"'"+TimeStart+"'"+" and "+"'"+TimeEnd+"'";
 				Double SUM_OUT = new Double(0);
 				ps=conn.prepareStatement(sql);
 				rs=ps.executeQuery();
