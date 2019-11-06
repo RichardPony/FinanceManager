@@ -12,7 +12,7 @@
 	<script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<div class="container" style="width:70%">
+	<div class="container" style="width:30%">
 	  <h2 align="center" style="margin-top:40px;">财务管理系统</h2>
 	  <form method="post" action = "Login/login.jsp">
 	    <div class="form-group"  style="">
