@@ -22,18 +22,22 @@ public class Finance_Dao {
    }
 
 // //�޸����ݿ��û���¼�ķ���update()
-//   public void update(User user) throws Exception{
-//	Connection conn = null;
-//	PreparedStatement ps = null;
-//	try {
-//		conn = DB_conn.getConnection();
-//		String sql = "update user set password=? where username=? ";
-//		ps = conn.prepareStatement(sql);
-//		ps.setString(1,user.getUsername());
-//		ps.setString(2,user.getPassword());
-//		ps.executeUpdate();
-//	}finally {DB_conn.free(null,ps, conn);}
-//   }
+   public void update(Finance finance) throws Exception{
+	Connection conn = null;
+	PreparedStatement ps = null;
+	try {
+		conn = DB_conn_Fin.getConnection();
+		String sql = "update fin_info set type=?,number=?,time=?,comments=? where id=? ";
+		ps = conn.prepareStatement(sql);
+		ps.setString(1,finance.getType());
+		ps.setString(2,finance.getNumber());
+		ps.setDate(3,finance.getTime());
+		ps.setString(4,finance.getComments());
+		ps.setInt(5,finance.getId());
+		System.out.println(finance.getId());
+		ps.executeUpdate();
+	}finally {DB_conn_Fin.free(null,ps, conn);}
+   }
  //ɾ�����ݿ��û���¼�ķ���delete()
    public void delete(int id) throws Exception{
 	 Connection conn = null;

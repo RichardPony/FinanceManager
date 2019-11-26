@@ -158,16 +158,17 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>  
             </div>
             <div style="text-align:center;">
-            	<h4 class="modal-title" id="myModalLabel">增加信息</h4> 
+            	<h4 class="modal-title" id="changeModalLabel">修改信息</h4> 
             </div>
             <div class="modal-body">  
-            <!-- 用于添加数据的输入框组 -->
+            <!-- 用于修改数据的输入框组 -->
+            <input id="Label-ID" style="opacity:0"></input>
              <!-- 类型 -->
 		     <div class="input-group mb-3">
 		      <div class="input-group-prepend">
 		        <span class="input-group-text">类型</span>
 		      </div>     
-		      	 <select class="form-control" id="type">
+		      	 <select class="form-control" id="ChangeType">
 			        <option>支出</option>
 			        <option>收入</option>
 			     </select>
@@ -177,21 +178,21 @@
 		      <div class="input-group-prepend">
 		        <span class="input-group-text">备注</span>
 		      </div>
-		      <input type="text" class="form-control" placeholder="Comments" id="comments">
+		      <input type="text" class="form-control" placeholder="Comments" id="ChangeComments">
 		     </div>
 		     <!-- 数额 -->
 		     <div class="input-group mb-3">
 		      <div class="input-group-prepend">
 		        <span class="input-group-text">数额</span>
 		      </div>
-		      <input type="text" class="form-control" placeholder="Number" id="number" oninput = "value=value.replace(/[^\d]/g,'')">
+		      <input type="text" class="form-control" placeholder="Number" id="ChangeNumber" oninput = "value=value.replace(/[^\d]/g,'')">
 		     </div>
 		     <!-- 时间 -->
 		     <div class="input-group mb-3">
 		      <div class="input-group-prepend">
 		        <span class="input-group-text">时间</span>
 		      </div>
-		      <input type="text" class="form-control" placeholder="Time" id='changetime'>
+		      <input type="text" class="form-control" placeholder="Time" id='ChangeDatetime'>
 		     </div>
             </div>  
             <div class="modal-footer">  
@@ -221,12 +222,10 @@
                 <td><%= finList.get(i).getUsername() %></td>
                 <td><%= finList.get(i).getType() %></td>
                 <td><%= finList.get(i).getComments() %></td>
-               
-               
                	 <td><%= finList.get(i).getNumber() %></td>
                 <td><%= finList.get(i).getTime() %></td>
                 <td>
-	                <button type="button" class="btn btn-outline-info" data-id=<%= finList.get(i).getId() %> data-toggle="modal" data-target="#ChangeModal">修改</button>
+	                <button type="button" class="btn btn-outline-info" data-id=<%= finList.get(i).getId() %> data-toggle="modal" data-target="#ChangeModal" onclick="changeID('<%=finList.get(i).getId()%>')">修改</button>
 	                <button type="button" class="btn btn-outline-danger" onclick="del('<%= finList.get(i).getId() %>')">删除</button>
                	</td>
                 <%len--; %>
@@ -260,8 +259,18 @@
              locale: moment.locale('zh-cn')
         });
     }); 
+    $(function () {
+        $("#ChangeDatetime").datetimepicker({
+             format: 'YYYY-MM-DD',
+             locale: moment.locale('zh-cn')
+        });
+    });
     function del(data){
     	window.location.href="DeleteController?username=" + <%=request.getParameter("username")%> + "&id="+data;
+    }
+    function changeID(data){
+    	document.getElementById("Label-ID").value=data
+    	console.log(data)
     }
     
     //处理添加操作  
@@ -284,7 +293,22 @@
 		
     }
     function change(){
-    	alert("修改成功");
+    	var type = document.getElementById("ChangeType").value;
+        var comments = document.getElementById("ChangeComments").value;
+        var number = document.getElementById("ChangeNumber").value;
+        var time = document.getElementById("ChangeDatetime").value;
+        var username = <%=request.getParameter("username")%>;
+        var id = document.getElementById("Label-ID").value;
+        alert(time);
+        if(number==""){
+			alert("数额不能为空");
+			return;
+		}else{
+			alert("Jump TO Change");
+			var url2 = encodeURI("Change?type="+type+"&comments="+comments+"&number="+number+"&time="+time+"&username="+username+"&id="+id);
+			window.location.href = url2;
+		}
+        
     }
     
     var res ='<%=request.getParameter("res")%>';

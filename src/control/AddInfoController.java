@@ -47,6 +47,8 @@ public class AddInfoController extends HttpServlet {
 			
 			Finance_Dao FD = new Finance_Dao();
 			FD.add(fin);
+
+			System.out.print("************************add*******************");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

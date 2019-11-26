@@ -20,9 +20,12 @@ public class TestDB {
 			
 			
 			Finance_Dao Fd = new Finance_Dao();
-			String username = "1398";
-			
-			System.out.print(Fd.QuerySum(username, null,null ));
+			int id = new Integer(60);
+			Finance f = new Finance();
+			f.setId(id);
+			f.setNumber("666666");
+			Fd.update(f);
+//			System.out.print(Fd.QuerySum(username, null,null ));
 //			List<Finance> finList=new ArrayList<Finance>();
 //			finList = Fd.Query("1398", "2019-10-1", "2019-11-1");
 //			System.out.print(finList.size());
