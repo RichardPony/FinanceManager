@@ -2,7 +2,9 @@ package control;
 
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,6 +39,11 @@ public class AddInfoController extends HttpServlet {
 		try {
 			Finance fin = new Finance();
 			java.util.Date date= format.parse(time);
+			Calendar calendar =
+					new GregorianCalendar();
+					calendar.setTime(date); //你自己的数据进行类型转换
+					calendar.add(calendar.DATE,1);//把日期往后增加一天.整数往后推,负数往前移动
+					date=calendar.getTime();
 			java.sql.Date Time = new java.sql.Date(date.getTime());
 			fin.setType(type);
 			fin.setComments(comments);

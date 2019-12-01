@@ -34,5 +34,14 @@ function register() {
 	window.location.href='Register?username='+ username +"&password="+password;
 	}
 </script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?52363c3e2b1c476ee6b3009a81e93617";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 </body>
 </html>

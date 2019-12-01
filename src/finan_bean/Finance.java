@@ -9,6 +9,13 @@ public class Finance {
 	java.sql.Date time = new java.sql.Date((new java.util.Date()).getTime());
 	String comments;
 	int id;
+	String kind;
+	public String getKind() {
+		return kind;
+	}
+	public void setKind(String kind) {
+		this.kind = kind;
+	}
 	public int getId() {
 		return id;
 	}

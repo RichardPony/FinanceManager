@@ -39,7 +39,7 @@
 		Sum = fin.QuerySum(username, null, null);
 		Sum_in = Sum.get(0);
 		Sum_out = Sum.get(1);
-		System.out.print(Sum);
+		//System.out.print(Sum);
 	}
 %>
 <nav class="navbar navbar-expand-md bg-primary navbar-dark" style="margin-top:0px;">

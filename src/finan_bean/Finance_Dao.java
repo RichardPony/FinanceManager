@@ -34,7 +34,7 @@ public class Finance_Dao {
 		ps.setDate(3,finance.getTime());
 		ps.setString(4,finance.getComments());
 		ps.setInt(5,finance.getId());
-		System.out.println(finance.getId());
+		System.out.println("更新的时间："+finance.getTime());
 		ps.executeUpdate();
 	}finally {DB_conn_Fin.free(null,ps, conn);}
    }

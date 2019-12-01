@@ -3,6 +3,9 @@ package control;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,13 +32,19 @@ public class Change extends HttpServlet {
 		String username = request.getParameter("username");
 		String getid=request.getParameter("id");
 		int id = Integer.parseInt(getid);
-		System.out.print("\n"+time);
+		System.out.println("\n"+time);
 		
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			Finance fin = new Finance();
 			java.util.Date date= format.parse(time);
+			Calendar calendar =
+					new GregorianCalendar();
+					calendar.setTime(date); //你自己的数据进行类型转换
+					calendar.add(calendar.DATE,1);//把日期往后增加一天.整数往后推,负数往前移动
+					date=calendar.getTime();
 			java.sql.Date Time = new java.sql.Date(date.getTime());
+			System.out.println("写入时间："+Time);
 			fin.setType(type);
 			fin.setComments(comments);
 			fin.setNumber(number);
@@ -49,7 +58,7 @@ public class Change extends HttpServlet {
 			e.printStackTrace();
 		}
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-//		response.sendRedirect("main.jsp?username="+username+"&res=success");
+		response.sendRedirect("main.jsp?username="+username+"&res=success");
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
